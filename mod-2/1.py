@@ -1,10 +1,10 @@
-from math import exp,pow,log,sin
-def f(x:int):
-    return exp(-x)-sin(x)
+from math import exp,pow,log,sin,cos
+f=lambda x:exp(-x)-sin(x)
+f1=lambda x:-exp(-x)-cos(x)
 def is_replacable(p,q):
     return f(p)*f(q)>0
 
-tol=1e-5
+tol=1e-3
 
 def bisection(a,b):
     k=0
@@ -56,5 +56,25 @@ def fixed(a):
             x=f(x)
 
         return x
+def newton(a):
+    if f(a)==0:return 0
+    k=0
+    while True:
+        k+=1
+        x=a-f(a)/f1(a)
+        print(x)
+        if abs(a-x)<tol:return k
+        a=x
 
-print(bisection(3,4)-falsi(3,4))
+        return x
+def secant(a,b):
+    if f(a)==0 or f(b)==0:return 0
+    k=0
+    while True:
+        k+=1
+        x=(a*f(b)-b*f(a))/(f(b)-f(a))
+        print(x)
+        if abs(a-x)<tol:return k
+        a=b
+        b=x
+print(secant(.4,.9))
